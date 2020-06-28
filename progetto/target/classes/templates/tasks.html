@@ -17,7 +17,7 @@
 			style="color: blue"></h3>
 	</div>
 	<hr>
-	<a href="/addCommento">AGGIUNGI</a>
+	<a th:if="${loggedTask.completato==false}" href="/addCommento">AGGIUNGI</a>
 	<span>COMMENTI:</span>
 	<div th:if="${commenti.size() > 0}">
 		<div th:each="commento : ${loggedTask.commentiTask}">
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<hr>
-	<a th:if=${loggedUtente.id}==${loggedTask.progetto.proprietario.id}
+	<a th:if="${loggedUtente.id}==${loggedTask.progetto.proprietario.id} AND ${loggedTask.completato==false}"
 		href="/addTagAlTask">AGGIUNGI</a>
 	<span>TAG:</span>
 	<br>
