@@ -25,7 +25,7 @@ public class Credenziali {
 
    
     /*utente a cui sono associate le credenziali*/
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)        // when the account is created...                                       
+    @OneToOne(cascade = CascadeType.ALL)        // when the account is created...                                       
     private Utente utente;
 
 	/*data di creazione di credenziali*/

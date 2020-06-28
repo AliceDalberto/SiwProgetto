@@ -22,17 +22,20 @@
 
 			</tr>
 		</thead>
-		
-		<tbody th:if="${progetto.taskContenuti.size()>0}"> 
-			<tr th:each="task : ${progetto.taskContenuti}">
-				<td><h3><a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
-				</a></h3></td>
 
-				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}>
+		<tbody th:if="${progetto.taskContenuti.size()>0}">
+			<tr th:each="task : ${progetto.taskContenuti}">
+				<td><h3>
+						<a th:href="'/task/' + ${task.id}" th:text="${task.nome}"> </a>
+					</h3></td>
+					<td th:if="${task.completato==true}">(Completato)</td>
+
+				<td  th:if="${loggedUtente.id}==${progetto.proprietario.id} AND ${task.completato==false}">
 					<form method="GET"
 						th:action="@{/task/{id}/modifica(id=${task.id})}">
-						<button type="submit" name="submit" value="value">AGGIORNA</button>
-					</form></td>
+						<button type="submit" value="aggiorna">AGGIORNA</button>
+					</form>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -53,6 +56,7 @@
 						th:style="'margin:0.1px;border:solid; border-color:'+${tag.colore}">
 						<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
 						<div th:text="${tag.descrizione}" style="color: gray"></div>
+						<div th:text="${tag.priorita}"></div>
 					</div></td>
 
 			</tr>

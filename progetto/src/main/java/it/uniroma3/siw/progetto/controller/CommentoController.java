@@ -35,6 +35,7 @@ public class CommentoController {
 	UtenteService utenteService;
 
 
+	/*aggiungo i commenti su qualsiasi task di un progetto su cui ho visibilità*/
 	@RequestMapping(value = "/addCommento", method = RequestMethod.GET)
 	public String aggiungiCommento(Model model) {
 		model.addAttribute("loggedTask", sessionData.getLoggedTask());

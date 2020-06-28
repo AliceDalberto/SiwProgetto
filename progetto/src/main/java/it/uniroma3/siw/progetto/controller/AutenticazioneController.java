@@ -67,7 +67,7 @@ public class AutenticazioneController {
 		this.credenzialiValidatore.validate(credenziali, credenzialiBindingResult);
 
 		// if neither of them had invalid contents, store the User and the Credentials into the DB
-		if(!utenteBindingResult.hasErrors() && ! credenzialiBindingResult.hasErrors()) {
+		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
 			// set the user and store the credentials;
 			// this also stores the User, thanks to Cascade.ALL policy
 			credenziali.setUtente(utente);

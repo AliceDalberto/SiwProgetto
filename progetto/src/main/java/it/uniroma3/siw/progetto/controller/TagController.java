@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
-import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.TagService;
 import it.uniroma3.siw.progetto.service.TaskService;
@@ -49,11 +48,7 @@ public class TagController {
 
 	@RequestMapping(value = {"/addTag"}, method = RequestMethod.GET)
 	public String creaTagForm(Model model){
-		Utente loggedUtente = sessionData.getLoggedUtente();
-		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-
-		model.addAttribute("loggedProgetto", loggedProgetto);
-		model.addAttribute("loggedUtente", loggedUtente);
+		
 		model.addAttribute("tagForm", new Tag());
 		return "aggiungiTagAlProgetto";
 
@@ -64,8 +59,6 @@ public class TagController {
 	public String progettoTag( @Valid @ModelAttribute("tagForm") Tag tag,
 			BindingResult tagBindingResult ,Model model) {
 
-
-		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 
 		//valido i campi di tag
@@ -79,7 +72,6 @@ public class TagController {
 			return "redirect:/progetti/" +loggedProgetto.getId();	
 		}
 
-		model.addAttribute("loggedUtente", loggedUtente);
 		return "aggiungiTagAlProgetto";
 
 

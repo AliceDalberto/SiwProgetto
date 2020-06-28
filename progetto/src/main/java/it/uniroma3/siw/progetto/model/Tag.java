@@ -32,10 +32,23 @@ public class Tag {
 	/*progetto associato ai tag*/
 	@ManyToOne
 	private Progetto progetto;
+	
+	private int priorita;
+
+	
+
+	public int getPriorita() {
+		return priorita;
+	}
+
+	public void setPriorita(int priorita) {
+		this.priorita = priorita;
+	}
 
 	public Tag() {
 		// TODO Auto-generated constructor stub
 		tasks = new ArrayList<>();
+        
 	}
 
 	public Tag(String nome, String colore, String descrizione) {

@@ -56,8 +56,8 @@ public class ProgettoController {
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto progetto = progettoService.getProgetto(progettoId); 
-		if(progetto.getProprietario().getId()!=loggedUtente.getId()  && !progetto.getMembri().contains(loggedUtente) ) 
-			return "redirect:/progetti";
+		//if(progetto.getProprietario().getId()!=loggedUtente.getId()  && !progetto.getMembri().contains(loggedUtente) ) 
+		//	return "redirect:/progetti";
 
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("progetto", progetto);	
@@ -95,12 +95,6 @@ public class ProgettoController {
 
 	@RequestMapping(value = {"/progetti/membro"}, method = RequestMethod.GET)
 	public String aggiungiMembroForm(Model model) {
-		Utente loggedUtente = sessionData.getLoggedUtente();
-		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-
-		model.addAttribute("loggedUtente", loggedUtente);
-
-		model.addAttribute("loggedProgetto", loggedProgetto);
 
 		model.addAttribute("credenziali", new Credenziali());
 		return "condividiProgetto";

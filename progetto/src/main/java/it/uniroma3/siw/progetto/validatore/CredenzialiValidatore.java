@@ -40,6 +40,28 @@ public class CredenzialiValidatore implements Validator {
 			errors.rejectValue("username", "required");
 		else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
 			errors.rejectValue("username", "size");
+		else if (credenziali2!=null)
+			errors.rejectValue("username", "duplicate");
+
+
+		if (password.isEmpty())
+			errors.rejectValue("password", "required");
+		else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
+			errors.rejectValue("password", "size");
+	}
+
+	public void validateModifica(Object o, Errors errors) {
+		Credenziali credenziali = (Credenziali) o;
+		String username = credenziali.getUsername().trim();
+		String password = credenziali.getPassword().trim();
+
+		Credenziali credenziali2 = this.credenzialiService.getCredenziali(username);
+
+
+		if (username.isEmpty())
+			errors.rejectValue("username", "required");
+		else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
+			errors.rejectValue("username", "size");
 		else if (credenziali2!=null && !credenziali2.getUtente().equals(sessionData.getLoggedUtente()))
 			errors.rejectValue("username", "duplicate");
 
@@ -49,6 +71,7 @@ public class CredenzialiValidatore implements Validator {
 		else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
 			errors.rejectValue("password", "size");
 	}
+
 
 	public void validateTask(Object o, Errors errors) {
 		Credenziali credenziali = (Credenziali) o;

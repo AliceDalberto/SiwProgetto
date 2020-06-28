@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,11 +44,11 @@ public class Utente {
 	private List<Commento> commento;
 
 	/*progetti di cui utente è proprietario*/
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proprietario",fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proprietario")
 	private List<Progetto> progettiProprietario;
 
 	/*progetti di cui utente ha visibilità*/
-	@ManyToMany(mappedBy = "membri", fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy = "membri")
 	private List<Progetto> progettiVisibili;
 
 	/*task affidati a utente*/

@@ -60,11 +60,7 @@ public class TaskController {
 
 	@RequestMapping(value = {"/addTask"}, method = RequestMethod.GET)
 	public String creaTaskForm(Model model){
-		Utente loggedUtente = sessionData.getLoggedUtente();
-		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 
-		model.addAttribute("loggedProgetto", loggedProgetto);
-		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("taskForm", new Task());
 		model.addAttribute("credenziali", new Credenziali());
 		return "aggiungiTask";
@@ -75,17 +71,17 @@ public class TaskController {
 			BindingResult credenzialiBindingResult,Model model) {
 
 
-		Utente loggedUtente = sessionData.getLoggedUtente();
+		//Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-		
+
 		//valido i campi del task
 		taskValidatore.validate(task,taskBindingResult);
 
 		Credenziali credenzialiCorr = this.credenzialiService.getCredenziali(credenziali.getUsername());
-		
+
 		//valido le credenziali dell' utente al quale voglio affidare il task
 		credenzialiValidatore.validateTask(credenzialiCorr, credenzialiBindingResult);
-		if (credenzialiBindingResult.hasErrors()) { //se non ci sono errori
+		if (credenzialiBindingResult.hasErrors()) { //se ci sono errori
 			return "aggiungiTask";
 		}
 		Utente membro = credenzialiCorr.getUtente(); //prendo utente dalle credenziali
@@ -98,8 +94,6 @@ public class TaskController {
 			this.taskService.salvaTask(task);			
 			return "redirect:/progetti/"+loggedProgetto.getId();	
 		}
-
-		model.addAttribute("loggedUtente", loggedUtente);
 
 		return "aggiungiTask";
 
@@ -163,7 +157,7 @@ public class TaskController {
 			return "redirect:/progetti/" + progettoCorr.getId();
 		}
 
-	
+
 		model.addAttribute("loggedUtente", sessionData.getLoggedUtente());
 		model.addAttribute("progettoCorr", progettoCorr);
 		return "modificaTask";
@@ -175,6 +169,17 @@ public class TaskController {
 		List<Task> taskContenuti = this.taskService.getTaskDaUtenteAddetto(loggedUtente);
 		model.addAttribute("taskContenuti", taskContenuti);
 		return "mieiTask";
+	}
+	
+	
+	@RequestMapping(value = {"/task/{id}/completato"}, method = RequestMethod.POST)
+	public String completoTask(@PathVariable Long id , Model model) {
+
+		Task taskCompleto = this.taskService.getTask(id);
+		taskCompleto.setCompletato(true);
+		taskService.salvaTask(taskCompleto);
+		Progetto progettoCorr = sessionData.getLoggedProgetto();
+		return "redirect:/progetti/" + progettoCorr.getId() ;
 	}
 
 

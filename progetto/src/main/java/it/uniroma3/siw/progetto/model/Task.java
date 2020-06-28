@@ -48,11 +48,22 @@ public class Task {
 
 	@ManyToOne
 	private Utente utenteAddetto;
+	
+	private Boolean completato;
+
+	public Boolean getCompletato() {
+		return completato;
+	}
+
+	public void setCompletato(Boolean completato) {
+		this.completato = completato;
+	}
 
 	public Task() {
 		// TODO Auto-generated constructor stub
 		this.tags= new ArrayList<Tag>();
 		this.commentiTask= new ArrayList<Commento>();
+		this.completato = false;
 	}
 
 	public Task(String nome, String descrizione) {

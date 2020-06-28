@@ -67,15 +67,6 @@ public class UtenteController {
 		return "admin";
 	}
 
-	/* chiamata al momento di aggiornare il profilo dell'utente*/
-	@RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
-	public String proprietario(Model model, @PathVariable Long progId) {
-
-		Utente utente = utenteService.getUtenteDaId(progId); Credenziali credenziali
-		= this.credenzialiService.getCredenzialiDaUtente(utente);
-		model.addAttribute("loggedUtente", utente); model.addAttribute("credenziali",
-				credenziali); return "utenteProfilo"; }
-
 
 	/*da admin posso vedere tutti gli utenti registrati*/
 	@RequestMapping(value = {"/admin/utenti"}, method = RequestMethod.GET)
@@ -124,7 +115,7 @@ public class UtenteController {
 
 		// valido i campi di utente e credenziali
 		this.utenteValidatore.validate(utente, utenteBindingResult);
-		this.credenzialiValidatore.validate(credenziali, credenzialiBindingResult);
+		this.credenzialiValidatore.validateModifica(credenziali, credenzialiBindingResult);
 
 		// se non hanno campi invalidi salvo nel DB
 		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
@@ -140,6 +131,19 @@ public class UtenteController {
 		}
 		return "modificaProfilo";
 
+	}
+
+
+
+	/* chiamata al momento di aggiornare il profilo dell'utente*/
+	@RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
+	public String proprietario(Model model, @PathVariable Long progId) {
+
+		Utente utente = utenteService.getUtenteDaId(progId);
+		Credenziali credenziali	= this.credenzialiService.getCredenzialiDaUtente(utente);
+		model.addAttribute("loggedUtente", utente); 
+		model.addAttribute("credenziali",credenziali); 
+		return "utenteProfilo"; 
 	}
 
 }
